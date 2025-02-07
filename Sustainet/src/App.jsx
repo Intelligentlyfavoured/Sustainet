@@ -7,32 +7,13 @@ import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
 import PaymentInitiatorHome from "./Modules/User Pages/PaymentInitiatorHome";
 import FinalPaymentAuthorizerHome from "./Modules/User Pages/FinalPaymentAuthorizerHome";
-import Sidebar from "./components/Sidebar";
-import CreateVoucher from "./components/create-voucher";
-// import ReviewVoucher from "./Modules/Vouchers/ReviewVoucher";
-// import AuthorizeVoucher from "./Modules/Vouchers/AuthorizeVoucher";
-// import InitiateVoucher from "./Modules/Vouchers/InitiateVoucher";
-// import PaymentVoucher from "./Modules/Vouchers/PaymentVoucher";
-// import DocumentationVoucher from "./Modules/Vouchers/DocumentationVoucher";
-// import Users from "./Modules/Users";
 
-const DashboardLayout = () => {
-  return (
-    <div className="dashboard-container">
-      <Sidebar />
-      <div className="dashboard-content">
-        <Outlet /> {/* This will render the selected route inside this layout */}
-      </div>
-    </div>
-  );
-};
+
 function App() {
   return (
     <Router>
-      <div className="app-container">
-        {/* Sidebar displayed for authenticated users */}
-        <Routes>
-          <Route path="/" element={<Login />} />
+      <Routes>
+        <Route path="/" element={<Login />} />
 
           {/* Protected Routes */}
           <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
