@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from "../../components/Sidebar";  // Import the Sidebar component
 import Dashboard from "../../components/Dashboard";  // Import the Dashboard component
 
-function AdminHome() {
+function PaymentInitiatorHome() {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function AdminHome() {
             {/* Conditional content for Initiator role */}
             {role === 'initiator' && (
               <div className="initiator-content">
-                <p>This is specific content for Administrator.</p>
+                <p>This is specific content for Payment Initiator.</p>
               </div>
             )}
             
@@ -41,4 +41,4 @@ function AdminHome() {
   );
 }
 
-export default AdminHome;
+export default PaymentInitiatorHome;

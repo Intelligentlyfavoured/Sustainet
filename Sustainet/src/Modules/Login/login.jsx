@@ -4,10 +4,10 @@ import '../../App.css'
 const users = {
   "admin@example.com": { password: "admin123", role: "admin" },
   "initiator@example.com": { password: "initiator123", role: "initiator" },
-  "authorator@example.com": { password: "authorator123", role: "authorator" },
+  "authorizer@example.com": { password: "authorizer123", role: "authorizer" },
   "reviewer@example.com": { password: "reviewer123", role: "reviewer" },
   "payment_initiator@example.com": { password: "payment123", role: "payment_initiator" },
-  "final_payment_authoritator@example.com": { password: "final123", role: "final_payment_authoritator" },
+  "final_payment_authorizer@example.com": { password: "final123", role: "final_payment_authorizer" },
 };
 
 export default function LoginPage() {
@@ -27,10 +27,10 @@ export default function LoginPage() {
       const roleRoutes = {
         admin: "/AdminHome",
         initiator: "/InitiatorHome",
-        authorator: "/AuthoratorHome",
+        authorizer: "/AuthorizerHome",
         reviewer: "/ReviewerHome",
         payment_initiator: "/payment-initiator-home",
-        final_payment_authoritator: "/final-payment-authoritator-home",
+        final_payment_authorizer: "/final-payment-authorizer-home",
       };
       
       navigate(roleRoutes[role] || "/");

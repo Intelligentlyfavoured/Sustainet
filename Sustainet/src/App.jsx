@@ -3,8 +3,10 @@ import Login from "./Modules/Login/login";
 import PrivateRoute from "./PrivateRoute";
 import AdminHome from "./Modules/User Pages/AdminHome";
 import InitiatorHome from "./Modules/User Pages/InitiatorHome";
-import AuthoratorHome from "./Modules/User Pages/AuthoratorHome";
+import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
+import PaymentInitiatorHome from "./Modules/User Pages/PaymentInitiatorHome";
+import FinalPaymentAuthorizerHome from "./Modules/User Pages/FinalPaymentAuthorizerHome";
 
 
 function App() {
@@ -21,21 +23,21 @@ function App() {
           <Route path="/InitiatorHome" element={<InitiatorHome />} />
         </Route>
 
-        <Route element={<PrivateRoute allowedRoles={["authorator"]} />}>
-          <Route path="/AuthoratorHome" element={<AuthoratorHome />} />
+        <Route element={<PrivateRoute allowedRoles={["authorizer"]} />}>
+          <Route path="/AuthorizerHome" element={<AuthorizerHome />} />
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["reviewer"]} />}>
           <Route path="/reviewer-home" element={<ReviewerHome />} />
         </Route>
 
-        {/* <Route element={<PrivateRoute allowedRoles={["payment_initiator"]} />}>
+        <Route element={<PrivateRoute allowedRoles={["payment_initiator"]} />}>
           <Route path="/payment-initiator-home" element={<PaymentInitiatorHome />} />
-        </Route> */}
+        </Route>
 
-        {/* <Route element={<PrivateRoute allowedRoles={["final_payment_authoritator"]} />}>
-          <Route path="/final-payment-authoritator-home" element={<FinalPaymentAuthoritatorHome />} />
-        </Route> */}
+        <Route element={<PrivateRoute allowedRoles={["final_payment_authorizer"]} />}>
+          <Route path="/final-payment-authorizer-home" element={<FinalPaymentAuthorizerHome />} />
+        </Route>
       </Routes>
     </Router>
   );
