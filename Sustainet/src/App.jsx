@@ -7,11 +7,17 @@ import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
 import PaymentInitiatorHome from "./Modules/User Pages/PaymentInitiatorHome";
 import FinalPaymentAuthorizerHome from "./Modules/User Pages/FinalPaymentAuthorizerHome";
+import Reviewer from "./components/Reviewer";
 
 
 function App() {
   return (
     <Router>
+
+      <Routes>
+        <Route path="/reviewer" element={<Reviewer />} />
+      </Routes>
+
       <Routes>
         <Route path="/" element={<Login />} />
 
