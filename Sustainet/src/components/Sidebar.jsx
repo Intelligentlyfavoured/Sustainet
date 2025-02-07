@@ -7,12 +7,12 @@ const Sidebar = () => {
   // 7 Main Options and Sub-options
   const menuItems = [
   
-    { title: "initiator voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Reviewer voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Authorizer voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Payment voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "FinalPayment voucher", subOptions: ["Approved", "Rejected"] },
-    { title: "Documentation Voucher", subOptions: ["Approved", "Rejected"] },
+    { title: "Initiate voucher "},
+    { title: "Review voucher "},
+    { title: "Authorize voucher "},
+    { title: "Initiate Payment"},
+    { title: "FinalPayment voucher"},
+    { title: "Documentation Voucher"},
     
   ];
 
