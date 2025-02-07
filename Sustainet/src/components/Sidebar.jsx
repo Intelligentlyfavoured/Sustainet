@@ -8,8 +8,8 @@ const Sidebar = () => {
     { title: "Review Voucher", path: "/review-voucher" },
     { title: "Authorize Voucher", path: "/authorize-voucher" },
     { title: "Initiate Voucher", path: "/initiate-voucher" },
-    { title: "Payment Voucher", path: "/payment-voucher" },
-    { title: "Documentation Voucher", path: "/documentation-voucher" },
+    { title: "Final-Payment Voucher", path: "/payment-voucher" },
+    { title: "Post-Payment Documentation Voucher", path: "/documentation-voucher" },
   ];
 
   return (
