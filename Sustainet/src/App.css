@@ -85,7 +85,8 @@
 }
 
 .tab {
-  width: 100px;
+  width: 100%;
+  max-width: 1024px;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 8px;
@@ -102,7 +103,7 @@
 }
 
 .tab span {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-size: 14px;
 }
 
@@ -128,7 +129,7 @@ h1, h2, b {
 
 
 
-
+/* Sidebar container */
 .sidebar {
   width: 250px;
   position: fixed;
@@ -139,36 +140,40 @@ h1, h2, b {
   color: white;
   padding-top: 20px;
   font-family: Arial, sans-serif;
+  transition: left 0.3s ease-in-out;
 }
 
+/* Sidebar title */
 .sidebar-title {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
+/* Sidebar menu items */
 .menu {
   list-style-type: none;
   padding: 0;
 }
 
 .menu li {
-  padding: 15px 20px;
+  padding: 10px 20px;
 }
 
+/* Sidebar links */
 .menu li a {
   color: white;
   text-decoration: none;
-  display: flex;
-  align-items: center;
+  display: block;
+  padding: 8px;
 }
 
 .menu li a:hover {
   background-color: #444;
   border-radius: 5px;
-  padding: 10px;
 }
 
+/* Submenu styles */
 .submenu-toggle {
   background: none;
   border: none;
@@ -187,7 +192,7 @@ h1, h2, b {
 }
 
 .submenu li {
-  padding: 10px 20px;
+  padding: 5px 10px;
 }
 
 .submenu li a {
@@ -197,4 +202,10 @@ h1, h2, b {
 
 .submenu li a:hover {
   background-color: #555;
+}
+
+/* Separator for User Groups & Users */
+.menu-separator {
+  border: 1px solid #555;
+  margin: 15px 0;
 }

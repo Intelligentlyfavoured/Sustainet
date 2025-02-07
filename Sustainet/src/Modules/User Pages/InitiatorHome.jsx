@@ -1,37 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import Sidebar from "../../components/Sidebar";  // Import the Sidebar component
-import Dashboard from "../../components/Dashboard";  // Import the Dashboard component
+import React, { useEffect, useState } from "react";
+import Sidebar from "../../components/Sidebar";
+import Dashboard from "../../components/Dashboard";
 
 function InitiatorHome() {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    // Fetch the user role from localStorage (or wherever you store it)
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      setRole(user.role); // Set the role from localStorage
+      setRole(user.role);
     }
   }, []);
 
-  // Conditionally render content based on user role
   return (
-    <div className="home-container" style={{ display: 'flexbox' }}>
-      <Sidebar />  {/* Sidebar on the left side */}
+    <div className="home-container" style={{ display: "flex" }}>
+      <Sidebar /> {/* Sidebar on the left side */}
 
-      <div className="content" style={{ marginLeft: '250px', padding: '20px', width: '100%' }}>
+      <div className="content" style={{ marginLeft: "250px", padding: "20px", flexGrow: 1 }}>
         {role ? (
           <>
             <h2>Welcome, {role}</h2>
-            <Dashboard />  {/* This will show the dashboard with tabs */}
+            <Dashboard /> {/* Dashboard with tabs */}
             
-            {/* Conditional content for Initiator role */}
-            {role === 'initiator' && (
+            {role === "initiator" && (
               <div className="initiator-content">
                 <p>This is specific content for Initiator.</p>
               </div>
             )}
-            
-            {/* You can add more conditional content for other roles if needed */}
           </>
         ) : (
           <p>Loading...</p>
