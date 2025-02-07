@@ -7,13 +7,13 @@ const Sidebar = () => {
   // 7 Main Options and Sub-options
   const menuItems = [
   
-    { title: "Option 1", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 2", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 3", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 4", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 5", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 6", subOptions: ["Approved", "Rejected"] },
-    { title: "Option 7", subOptions: ["Approved", "Rejected"] },
+    { title: "initiator voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Reviewer voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Authorizer voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Payment voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "FinalPayment voucher", subOptions: ["Approved", "Rejected"] },
+    { title: "Documentation Voucher", subOptions: ["Approved", "Rejected"] },
+    
   ];
 
   // Toggle submenu visibility
