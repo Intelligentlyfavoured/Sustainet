@@ -69,8 +69,8 @@ function Reviewer() {
           <h2>Welcome, {role}</h2>
 
           {/* Notification Icon */}
-          <div className="notification-icon" onClick={clearNotifications}>
-            <FaBell style={{float:"right"}}></FaBell>
+          <div className="notification-icon" onClick={clearNotifications}  style={{float:"right"}}>
+            <FaBell size={'1.5rem'}></FaBell>
             {notifications > 0 && <span className="notification-count">{notifications}</span>}
           </div>
         </div>

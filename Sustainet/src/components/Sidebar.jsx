@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -7,12 +7,12 @@ const Sidebar = () => {
   // 7 Main Options and Sub-options
   const menuItems = [
   
-    { title: "initiator voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Reviewer voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Authorizer voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "Payment voucher ", subOptions: ["Approved", "Rejected"] },
-    { title: "FinalPayment voucher", subOptions: ["Approved", "Rejected"] },
-    { title: "Documentation Voucher", subOptions: ["Approved", "Rejected"] },
+    { title: "Initiate voucher "},
+    { title: "Review voucher "},
+    { title: "Authorize voucher "},
+    { title: "Initiate Payment"},
+    { title: "Final Payment voucher"},
+    { title: "Documentation Voucher"},
     
   ];
 
@@ -34,11 +34,22 @@ const Sidebar = () => {
           <li key={index}>
             <button className="submenu-toggle" onClick={() => toggleMenu(index)}>
               {item.title}
-            </Link>
+            </button>
+            {openMenus[index] && (
+              <ul className="submenu">
+                {item.subOptions.map((sub, subIndex) => (
+                  <li key={subIndex}>
+                    <Link to={`/option${index + 1}-sub${subIndex + 1}`}>
+                      {sub}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
 
-        {/* Separator */}
+        {/* Separator for User Groups & Users */}
         <hr className="menu-separator" />
 
         {/* User Groups */}
