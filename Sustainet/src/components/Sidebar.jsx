@@ -2,25 +2,37 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  // Sidebar Menu Options
+  const [openMenus, setOpenMenus] = useState({}); // Track which menus are open
+
+  // 7 Main Options and Sub-options
   const menuItems = [
-    { title: "Initiate Voucher", path: "/initiate-voucher" },
-    { title: "Review Voucher", path: "/review-voucher" },
-    { title: "Authorize Voucher", path: "/authorize-voucher" },
-    { title: "Initiate Payment", path: "/initiate-payment" },
-    { title: "Payment Voucher", path: "/final-payment-voucher" },
-    { title: "Documentation", path: "/documentation-voucher" },
+  
+    { title: "initiator voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Reviewer voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Authorizer voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "Payment voucher ", subOptions: ["Approved", "Rejected"] },
+    { title: "FinalPayment voucher", subOptions: ["Approved", "Rejected"] },
+    { title: "Documentation Voucher", subOptions: ["Approved", "Rejected"] },
+    
   ];
+
+  // Toggle submenu visibility
+  const toggleMenu = (index) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return (
     <div className="sidebar">
       <h3 className="sidebar-title">Dashboard</h3>
 
       <ul className="menu">
-        {/* Main Navigation Links */}
+        {/* Render 7 Main Options with Sub-options */}
         {menuItems.map((item, index) => (
           <li key={index}>
-            <Link to={item.path} className="sidebar-link">
+            <button className="submenu-toggle" onClick={() => toggleMenu(index)}>
               {item.title}
             </Link>
           </li>
@@ -30,17 +42,26 @@ const Sidebar = () => {
         <hr className="menu-separator" />
 
         {/* User Groups */}
-        {/* <li>
-          <h4 className="menu-header">User Groups</h4>
-          <ul className="submenu">
-            <li><Link to="/admin" className="sidebar-link">Admin</Link></li>
-            <li><Link to="/initiator" className="sidebar-link">Initiator</Link></li>
-            <li><Link to="/authorizer" className="sidebar-link">Authorizer</Link></li>
-            <li><Link to="/reviewer" className="sidebar-link">Reviewer</Link></li>
-            <li><Link to="/payment-initiator" className="sidebar-link">Payment Initiator</Link></li>
-            <li><Link to="/final-payment-authorizer" className="sidebar-link">Final Payment Authorizer</Link></li>
-          </ul>
-        </li> */}
+        <li>
+          <button className="submenu-toggle" onClick={() => toggleMenu("userGroups")}>
+            User Groups
+          </button>
+          {openMenus["userGroups"] && (
+            <ul className="submenu">
+              <li><Link to="/admin">Admin</Link></li>
+              <li><Link to="/initiator">Initiator</Link></li>
+              <li><Link to="/authorizer">Authorizer</Link></li>
+              <li><Link to="/reviewer">Reviewer</Link></li>
+              <li><Link to="/payment-initiator">Payment Initiator</Link></li>
+              <li><Link to="/final-payment-authorizer">Final Payment Authorizer</Link></li>
+            </ul>
+          )}
+        </li>
+
+        {/* Users */}
+        <li>
+          <Link to="/users">Users</Link>
+        </li>
       </ul>
     </div>
   );
