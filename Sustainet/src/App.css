@@ -212,4 +212,91 @@ h1, h2, b {
 
 
 
+.create-voucher-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Light grey background */
+}
+
+/* Form Card */
+.create-voucher-form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-width: 500px;
+  min-height: 500px;
+  align-items: flex;
+}
+
+.create-voucher-form h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form Fields */
+.create-voucher-form .form-group {
+  margin-bottom: 15px;
+}
+
+.create-voucher-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.create-voucher-form input,
+.create-voucher-form select,
+.create-voucher-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.create-voucher-form input:focus,
+.create-voucher-form select:focus,
+.create-voucher-form textarea:focus {
+  border-color: #007bff; /* Highlight on focus */
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* File Upload */
+.create-voucher-form input[type="file"] {
+  padding: 5px;
+}
+
+/* Submit Button */
+.create-voucher-form .submit-btn {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.create-voucher-form .submit-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .create-voucher-form {
+    padding: 20px;
+    width: 90%;
+  }
+}
+
+
 
