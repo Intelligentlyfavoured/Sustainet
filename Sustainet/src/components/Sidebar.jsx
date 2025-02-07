@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  // 7 Main Options (No Sub-options)
+  // Sidebar Menu Options
   const menuItems = [
-    { title: "Create Voucher", path: "/create-voucher" },
+    { title: "Initiate Voucher", path: "/initiate-voucher" },
     { title: "Review Voucher", path: "/review-voucher" },
     { title: "Authorize Voucher", path: "/authorize-voucher" },
-    { title: "Initiate Voucher", path: "/initiate-voucher" },
-    { title: "Final-Payment Voucher", path: "/payment-voucher" },
-    { title: "Post-Payment Documentation Voucher", path: "/documentation-voucher" },
+    { title: "Initiate Payment", path: "/initiate-payment" },
+    { title: "Payment Voucher", path: "/final-payment-voucher" },
+    { title: "Documentation", path: "/documentation-voucher" },
   ];
 
   return (
@@ -17,35 +17,30 @@ const Sidebar = () => {
       <h3 className="sidebar-title">Dashboard</h3>
 
       <ul className="menu">
-        {/* Render 7 Main Options */}
+        {/* Main Navigation Links */}
         {menuItems.map((item, index) => (
           <li key={index}>
-            <Link to={item.path} className="menu-item">
+            <Link to={item.path} className="sidebar-link">
               {item.title}
             </Link>
           </li>
         ))}
 
-        {/* Separator for User Groups & Users */}
+        {/* Separator */}
         <hr className="menu-separator" />
 
         {/* User Groups */}
-        <li>
-          <button className="submenu-toggle">User Groups</button>
+        {/* <li>
+          <h4 className="menu-header">User Groups</h4>
           <ul className="submenu">
-            <li><Link to="/admin">Admin</Link></li>
-            <li><Link to="/initiator">Initiator</Link></li>
-            <li><Link to="/authorizer">Authorizer</Link></li>
-            <li><Link to="/reviewer">Reviewer</Link></li>
-            <li><Link to="/payment-initiator">Payment Initiator</Link></li>
-            <li><Link to="/final-payment-authorizer">Final Payment Authorizer</Link></li>
+            <li><Link to="/admin" className="sidebar-link">Admin</Link></li>
+            <li><Link to="/initiator" className="sidebar-link">Initiator</Link></li>
+            <li><Link to="/authorizer" className="sidebar-link">Authorizer</Link></li>
+            <li><Link to="/reviewer" className="sidebar-link">Reviewer</Link></li>
+            <li><Link to="/payment-initiator" className="sidebar-link">Payment Initiator</Link></li>
+            <li><Link to="/final-payment-authorizer" className="sidebar-link">Final Payment Authorizer</Link></li>
           </ul>
-        </li>
-
-        {/* Users */}
-        <li>
-          <Link to="/users">Users</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

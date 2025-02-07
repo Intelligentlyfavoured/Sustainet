@@ -7,21 +7,22 @@ import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
 import PaymentInitiatorHome from "./Modules/User Pages/PaymentInitiatorHome";
 import FinalPaymentAuthorizerHome from "./Modules/User Pages/FinalPaymentAuthorizerHome";
-import AuthorizerVoucher from "./components/AuthorizerVoucher";
+// import AuthorizerVoucher from "./components/Authorizer voucher ";
 
 
 function App() {
   return (
     <Router>
+
       <Routes>
-        <Route path="AuthorizerVoucher" element={<AuthorizerVoucher/>}/>
+        <Route path="/reviewer" element={<Reviewer />} />
       </Routes>
       <Routes>
         <Route path="/" element={<Login />} />
 
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/AdminHome" element={<AdminHome />} />
-        </Route>
+        </Route>19aafaae3243066970152adc2f4d9420c654d002
 
         <Route element={<PrivateRoute allowedRoles={["initiator"]} />}>
           <Route path="/InitiatorHome" element={<InitiatorHome />} />
