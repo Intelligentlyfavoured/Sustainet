@@ -5,8 +5,8 @@ const Sidebar = () => {
   // Sidebar Menu Options
   const menuItems = [
     { title: "Initiate Voucher", path: "/initiate-voucher" },
-    { title: "Review Voucher", path: "/review-voucher" },
-    { title: "Authorize Voucher", path: "/authorize-voucher" },
+    { title: "Review Voucher", path: "/reviewer" },
+    { title: "Authorize Voucher", path: "/AuthorizerVoucher" },
     { title: "Initiate Payment", path: "/initiate-payment" },
     { title: "Payment Voucher", path: "/final-payment-voucher" },
     { title: "Documentation", path: "/documentation-voucher" },
