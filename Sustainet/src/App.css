@@ -12,7 +12,7 @@
   width: 120px;
   margin-bottom: 10px;
 }
-  
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -69,7 +69,6 @@
 
 
 
-/* Dashboard styles */
 .dashboard-container {
       display: flex;
       flex-direction: column;
@@ -214,3 +213,4 @@ h1, h2, b {
   border: 1px solid #555;
   margin: 15px 0;
 }
+
