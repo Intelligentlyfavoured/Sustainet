@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./createvoucher.css";
+import "./createsupplier.css";
 import Sidebar from "./Sidebar";
 
 const CreateSupplier = () => {

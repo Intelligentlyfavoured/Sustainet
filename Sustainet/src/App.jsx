@@ -19,6 +19,7 @@ function App() {
         <Route path="/reviewer" element={<Reviewer />} />
         <Route path="/create-voucher" element={<CreateVoucher />} />
         <Route path="/create-supplier" element={<CreateSupplier />} />
+        {/* <Route path="/initiate-payment" element={<InitiatePayment />} /> */}
       </Routes>
 
       <Routes>
