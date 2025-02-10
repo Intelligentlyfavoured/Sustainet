@@ -27,7 +27,7 @@ function ReviewerHome() {
             {/* Conditional content for Initiator role */}
             {role === 'initiator' && (
               <div className="initiator-content">
-                <p>This is specific content for Reviewer.</p>
+                {/* <p>This is specific content for Reviewer.</p> */}
               </div>
             )}
             

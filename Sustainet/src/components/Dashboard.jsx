@@ -29,7 +29,6 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-
       <div className="tabs-container">
         <div className="tab">
           <Link to="#">
