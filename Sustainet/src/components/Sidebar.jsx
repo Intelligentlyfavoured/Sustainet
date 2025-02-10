@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   // Sidebar Menu Options
   const menuItems = [
-    { title: "Initiate Voucher", path: "/initiate-voucher" },
-    { title: "Review Voucher", path: "/review-voucher" },
+    { title: "Initiate Voucher", path: "/create-voucher" },
+    { title: "Create Supplier", path: "/create-supplier" },
+    { title: "Review Voucher", path: "/reviewer" },
     { title: "Authorize Voucher", path: "/authorize-voucher" },
     { title: "Initiate Payment", path: "/initiate-payment" },
     { title: "Payment Voucher", path: "/final-payment-voucher" },

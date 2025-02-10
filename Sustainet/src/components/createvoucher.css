@@ -1,0 +1,192 @@
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8f9fa;
+    overflow: hidden;
+  }
+  
+.create-voucher-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  /* Form styling */
+  .create-voucher-form {
+    min-width: 1000px;
+    min-height:800px;
+    display:flex;
+    justify-content: flex;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .create-voucher-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Input field styling */
+  .create-voucher-form .form-control {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .create-voucher-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    outline: none;
+  }
+  
+  /* File input */
+  .create-voucher-form input[type='file'] {
+    padding: 10px;
+  }
+  
+  /* Submit button styling */
+  .create-voucher-form .btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+  }
+  
+  .create-voucher-form .btn-primary:hover {
+    background: #0056b3;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 992px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 15px;
+    }
+  
+    .create-voucher-container {
+      width: 100%;
+      padding: 20px;
+    }
+  
+    .create-voucher-form {
+      width: 100%;
+      padding: 25px;
+    }
+  }
+
+ 
+  .supplier-form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+  }
+  
+ 
+  .supplier-form {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .supplier-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+
+  .supplier-form .form-control {
+    width: 80%;
+    max-width: 600px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .supplier-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    outline: none;
+  }
+  
+  .supplier-form .btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .supplier-form .btn-primary:hover {
+    background: #0056b3;
+  }
+  
+
+  @media (max-width: 992px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 15px;
+    }
+  
+    .supplier-form-container {
+      width: 100%;
+      height: auto;
+    }
+  
+    .supplier-form {
+      width: 100%;
+      height: auto;
+      padding: 20px;
+    }
+  }
+  
+  

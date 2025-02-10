@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './../App.css'
+import './createvoucher.css'
+import Sidebar from "./Sidebar";
 const CreateVoucher = () => {
   const [voucher, setVoucher] = useState({
     supplier_name: "",
@@ -34,6 +35,9 @@ const CreateVoucher = () => {
   };
 
   return (
+
+    <div className="container">
+      <Sidebar />
     
     <div className="create-voucher-container">
       <div className="p-3 rounded w-50 borde">
@@ -93,6 +97,7 @@ const CreateVoucher = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
