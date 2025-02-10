@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../../App.css'
+import "../../App.css";
+import logo from "./logo.png"; // Replace with actual path
+
 const users = {
   "admin@example.com": { password: "admin123", role: "admin" },
   "initiator@example.com": { password: "initiator123", role: "initiator" },
@@ -17,13 +19,11 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
+    e.preventDefault();
     if (users[email] && users[email].password === password) {
       const role = users[email].role;
       localStorage.setItem("user", JSON.stringify({ email, role }));
-      
+
       const roleRoutes = {
         admin: "/AdminHome",
         initiator: "/InitiatorHome",
@@ -32,7 +32,7 @@ export default function LoginPage() {
         payment_initiator: "/payment-initiator-home",
         final_payment_authorizer: "/final-payment-authorizer-home",
       };
-      
+
       navigate(roleRoutes[role] || "/");
     } else {
       setError("Invalid email or password");
@@ -41,24 +41,25 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
-      <h2 className="login-title">Login</h2>
+      <img src={logo} alt="Logo" className="login-logo" />
+     
       {error && <p className="login-error">{error}</p>}
-      <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }} className="login-form">
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
+      <form onSubmit={handleLogin} className="login-form">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="login-input"
-          required 
+          required
         />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="login-input"
-          required 
+          required
         />
         <button type="submit" className="login-button">Login</button>
       </form>
