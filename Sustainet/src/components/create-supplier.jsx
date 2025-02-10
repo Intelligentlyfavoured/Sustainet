@@ -1,134 +1,159 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./style.css";
-import Sidebar from "./Sidebar";
+import { useState } from "react";
+import {
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  IconButton
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import Sidebar from "./Sidebar"; 
+import "./style.css"; 
 
-const CreateSupplier = () => {
-  const [supplier, setSupplier] = useState({
-    name: "",
+export default function CreateSupplier() {
+  const [form, setForm] = useState({
+    supplierName: "",
     email: "",
     phone: "",
-    accounts: [""],
-    products: [""],
+    company: "",
+    address: "",
+    accounts: [""], // Multiple accounts
+    file: null
   });
 
-  const navigate = useNavigate();
+  const handleChange = (e, index = null) => {
+    const { name, value } = e.target;
+    if (name === "accounts" && index !== null) {
+      const updatedAccounts = [...form.accounts];
+      updatedAccounts[index] = value;
+      setForm((prev) => ({
+        ...prev,
+        accounts: updatedAccounts
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleFileChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      file: e.target.files[0]
+    }));
+  };
+
+  const addAccountField = () => {
+    setForm((prev) => ({
+      ...prev,
+      accounts: [...prev.accounts, ""]
+    }));
+  };
+
+  const removeAccountField = (index) => {
+    const updatedAccounts = [...form.accounts];
+    updatedAccounts.splice(index, 1);
+    setForm((prev) => ({
+      ...prev,
+      accounts: updatedAccounts
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/suppliers/create", supplier)
-      .then((result) => {
-        if (result.data.Status) {
-          alert("Supplier created successfully!");
-          navigate("");
-        } else {
-          alert(result.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSupplier({ ...supplier, [name]: value });
-  };
-
-  const handleDynamicChange = (index, type, value) => {
-    const updatedList = [...supplier[type]];
-    updatedList[index] = value;
-    setSupplier({ ...supplier, [type]: updatedList });
-  };
-
-  const addField = (type) => {
-    setSupplier({ ...supplier, [type]: [...supplier[type], ""] });
+    console.log("Supplier Data:", form);
   };
 
   return (
     <div className="container">
       <Sidebar />
-      <div className="create-supplier-container">
-        <div className="p-3 rounded w-50 borde">
-          <h3 className="text-center">Create Supplier</h3>
-          <form className="create-supplier-form" onSubmit={handleSubmit}>
-            <div className="col-12">
-              <label className="form-label">Supplier Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                placeholder="Enter Supplier Name"
-                onChange={handleInputChange}
-                required
+      <Paper elevation={3} className="form-container">
+        <Typography variant="h5" className="form-title">Create Supplier</Typography>
+        <form onSubmit={handleSubmit} className="supplier-form">
+          <TextField
+            label="Supplier Name"
+            name="supplierName"
+            value={form.supplierName}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Phone Number"
+            name="phone"
+            type="tel"
+            value={form.phone}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Company Name"
+            name="company"
+            value={form.company}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Address"
+            name="address"
+            value={form.address}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          {/* Dynamic Account Fields */}
+          <Typography variant="subtitle1" className="account-title">Accounts</Typography>
+          {form.accounts.map((account, index) => (
+            <div key={index} className="account-field">
+              <TextField
+                label={`Account ${index + 1}`}
+                name="accounts"
+                value={account}
+                onChange={(e) => handleChange(e, index)}
+                fullWidth
+                margin="normal"
               />
+              <IconButton onClick={() => removeAccountField(index)} disabled={form.accounts.length === 1}>
+                <RemoveIcon />
+              </IconButton>
             </div>
-            <div className="col-12">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                placeholder="Enter Email"
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="col-12">
-              <label className="form-label">Phone Number</label>
-              <input
-                type="tel"
-                className="form-control"
-                name="phone"
-                placeholder="Enter Phone Number"
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="col-12">
-              <label className="form-label">Accounts</label>
-              {supplier.accounts.map((account, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className="form-control mb-2"
-                  placeholder={`Account ${index + 1}`}
-                  value={account}
-                  onChange={(e) => handleDynamicChange(index, "accounts", e.target.value)}
-                  required
-                />
-              ))}
-              <button type="button" className="btn btn-secondary mt-2" onClick={() => addField("accounts")}>
-                Add Account
-              </button>
-            </div>
-            <div className="col-12">
-              <label className="form-label">Products</label>
-              {supplier.products.map((product, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className="form-control mb-2"
-                  placeholder={`Product ${index + 1}`}
-                  value={product}
-                  onChange={(e) => handleDynamicChange(index, "products", e.target.value)}
-                  required
-                />
-              ))}
-              <button type="button" className="btn btn-secondary mt-2" onClick={() => addField("products")}>
-                Add Product
-              </button>
-            </div>
-            <div className="col-12">
-              <button type="submit" className="btn btn-primary w-100">
-                Submit Supplier
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+          ))}
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={addAccountField}
+            className="add-account-btn"
+          >
+            Add Account
+          </Button>
+
+          {/* File Upload */}
+          <input type="file" onChange={handleFileChange} className="file-input" />
+
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Save Supplier
+          </Button>
+        </form>
+      </Paper>
     </div>
   );
-};
-
-export default CreateSupplier;
+}

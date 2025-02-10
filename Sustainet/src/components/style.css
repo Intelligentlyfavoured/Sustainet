@@ -204,3 +204,36 @@ tbody tr:hover {
     flex-direction: column;
   }
 }
+
+
+
+
+.supplier-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-title {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.account-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-account-btn {
+  margin-top: 10px;
+}
+
+.file-input {
+  margin: 15px 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
