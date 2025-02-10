@@ -11,7 +11,7 @@ const Sidebar = () => {
     { title: "Authorize Voucher", path: "/VoucherAuthorization" },
     { title: "Initiate Payment", path: "/PaymentInitiation" },
     { title: "Authorize Payment", path: "/PaymentAuthorization" },
-    { title: "Documentation", path: "/documentation-voucher" },
+    { title: "Documentation", path: "/Documentation" },
   ];
 
   return (
