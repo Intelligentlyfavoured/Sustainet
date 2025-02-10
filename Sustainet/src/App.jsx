@@ -11,6 +11,8 @@ import Reviewer from "./components/Reviewer";
 import VoucherAuthorization from "./components/VoucherAuthorization";
 import PaymentAuthorization from "./components/PaymentAuthorization";
 import PaymentInitiation from "./components/PaymentInitiation";
+import CreateVoucher from "./components/create-voucher";
+import CreateSupplier from "./components/create-supplier";
 // import Documentation from "./components/Documentation";
 
 
@@ -24,6 +26,8 @@ function App() {
         <Route path="/VoucherAuthorization" element={<VoucherAuthorization />} />
         <Route path="/PaymentInitiation" element={<PaymentInitiation />} />
         <Route path="/PaymentAuthorization" element={<PaymentAuthorization />} />
+        <Route path="/create-voucher" element={<CreateVoucher />} />
+        <Route path="/create-supplier" element={<CreateSupplier />} />
         {/* <Route path="/Documentation" element={<Documentation />} /> */}
       </Routes>
 
