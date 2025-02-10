@@ -5,7 +5,7 @@ import { FaBell } from "react-icons/fa";
 
 const API_URL = "https://your-api-endpoint.com/vouchers";
 
-const Reviewer = () => {
+const PaymentAuthorization = () => {
   const [vouchers, setVouchers] = useState([]);
   const [filterText, setFilterText] = useState("");
   const [selectedVoucher, setSelectedVoucher] = useState(null);
@@ -96,7 +96,7 @@ const Reviewer = () => {
     <div className="reviewer-container">
       <Sidebar />
       <div className="reviewer-content">
-      <h2>Vouchers Review</h2>
+      <h2>Payment Authorization</h2>
         <div className="top-bar">
           <input
             type="text"
@@ -138,7 +138,7 @@ const Reviewer = () => {
                     </td>
                     <td>
                       <button className="preview-btn" onClick={() => openModal(voucher)}>
-                        Review
+                        Authorize payment
                       </button>
                     </td>
                   </tr>
@@ -152,4 +152,4 @@ const Reviewer = () => {
   );
 };
 
-export default Reviewer;
+export default PaymentAuthorization;

@@ -27,7 +27,7 @@ function AuthorizerHome() {
             {/* Conditional content for Initiator role */}
             {role === 'initiator' && (
               <div className="initiator-content">
-                <p>This is specific content for Authorizer.</p>
+                {/* <p>This is specific content for Authorizer.</p> */}
               </div>
             )}
             
