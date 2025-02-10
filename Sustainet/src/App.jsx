@@ -7,15 +7,13 @@ import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
 import PaymentInitiatorHome from "./Modules/User Pages/PaymentInitiatorHome";
 import FinalPaymentAuthorizerHome from "./Modules/User Pages/FinalPaymentAuthorizerHome";
-import AuthorizerVoucher from "./components/AuthorizerVoucher";
 import Reviewer from "./components/Reviewer";
 import VoucherAuthorization from "./components/VoucherAuthorization";
 import PaymentAuthorization from "./components/PaymentAuthorization";
 import PaymentInitiation from "./components/PaymentInitiation";
 import CreateVoucher from "./components/create-voucher";
 import CreateSupplier from "./components/create-supplier";
-import AdminDashboard from "./components/admindashboard";
-// import Documentation from "./components/Documentation";
+import Documentation from "./components/Documentation";
 
 
 
@@ -30,13 +28,9 @@ function App() {
         <Route path="/PaymentAuthorization" element={<PaymentAuthorization />} />
         <Route path="/create-voucher" element={<CreateVoucher />} />
         <Route path="/create-supplier" element={<CreateSupplier />} />
-        <Route path="/admindashboard" element={<AdminDashboard />} />
-        {/* <Route path="/Documentation" element={<Documentation />} /> */}
+        <Route path="/Documentation" element={<Documentation />} />
       </Routes>
 
-      <Routes>
-        <Route path="/AuthorizerVoucher" element={<AuthorizerVoucher/>}/>
-      </Routes>
       <Routes>
         <Route path="/" element={<Login />} />
 

@@ -10,7 +10,7 @@ const Sidebar = () => {
     { title: "Authorize Voucher", path: "/VoucherAuthorization" },
     { title: "Initiate Payment", path: "/PaymentInitiation" },
     { title: "Authorize Payment", path: "/PaymentAuthorization" },
-    { title: "Dashboard", path: "/admindashboard" },
+    { title: "Documentation", path: "/Documentation" },
   ];
 
   // Logout function
