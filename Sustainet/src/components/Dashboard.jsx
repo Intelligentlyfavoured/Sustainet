@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaUser, FaCog, FaInfoCircle } from 'react-icons/fa';
 
 export default function Dashboard() {
   const [data, setData] = useState({
@@ -31,22 +30,22 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="tabs-container">
         <div className="tab">
-          <Link to="#">
+          <Link to="/">
             <span>Total Initiated<br /><b> {data.totalInitiated}</b></span>
           </Link>
         </div>
         <div className="tab">
-          <Link to="#">
+          <Link to="/">
             <span>Total Authorised<br /><b> {data.totalAuthorised}</b></span>
           </Link>
         </div>
         <div className="tab">
-          <Link to="#">
+          <Link to="/">
             <span>Total Reviewed<br /> <b>{data.totalReviewed}</b></span>
           </Link>
         </div>
         <div className="tab">
-          <Link to="#">
+          <Link to="/">
             <span>Final Authorization<br /><b> {data.finalAuthorization}</b></span>
           </Link>
         </div>
