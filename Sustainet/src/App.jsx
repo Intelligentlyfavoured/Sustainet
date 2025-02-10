@@ -14,6 +14,7 @@ import PaymentAuthorization from "./components/PaymentAuthorization";
 import PaymentInitiation from "./components/PaymentInitiation";
 import CreateVoucher from "./components/create-voucher";
 import CreateSupplier from "./components/create-supplier";
+import AdminDashboard from "./components/admindashboard";
 // import Documentation from "./components/Documentation";
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/PaymentAuthorization" element={<PaymentAuthorization />} />
         <Route path="/create-voucher" element={<CreateVoucher />} />
         <Route path="/create-supplier" element={<CreateSupplier />} />
+        <Route path="/admindashboard" element={<AdminDashboard />} />
         {/* <Route path="/Documentation" element={<Documentation />} /> */}
       </Routes>
 

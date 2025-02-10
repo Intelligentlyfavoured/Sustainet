@@ -48,7 +48,7 @@ export default function CreateVoucher() {
     <div className="container">
       <Sidebar />
       <Paper elevation={3} className="form-container">
-        <Typography variant="h5" className="form-title">Create Voucher</Typography>
+        <Typography variant="h5" className="form-title">Create Payment Voucher</Typography>
         <form onSubmit={handleSubmit} className="voucher-form">
           <TextField
             label="Voucher Name"
@@ -91,7 +91,7 @@ export default function CreateVoucher() {
             </Select>
           </FormControl>
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={
               <Switch
                 checked={form.enabled}
@@ -100,9 +100,13 @@ export default function CreateVoucher() {
               />
             }
             label="Enable Voucher"
-          />
+          /> */}
 
-          <input type="file" onChange={handleFileChange} className="file-input" />
+<label className="file-label">
+  Upload Invoice
+ </label>
+ 
+<input type="file" onChange={handleFileChange} className="file-input" />
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Save Voucher
@@ -112,3 +116,4 @@ export default function CreateVoucher() {
     </div>
   );
 }
+

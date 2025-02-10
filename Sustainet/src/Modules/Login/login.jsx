@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 import "../../App.css";
 import logo from "./logo.png"; // Replace with actual path
 
@@ -16,13 +16,26 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (users[email] && users[email].password === password) {
-      const role = users[email].role;
-      localStorage.setItem("user", JSON.stringify({ email, role }));
+
+    const navigate = useNavigate();
+  
+
+    const handleLogin = (e) => {
+      e.preventDefault();
+  
+      if (users[email] && users[email].password === password) {
+        const role = users[email].role;
+  
+        localStorage.setItem("user", JSON.stringify({ email, role }));
+        localStorage.setItem("authToken", "secure_token"); // Auth token
+    
+        // Prevent Back Button After Login
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = () => {
+          navigate("/dashboard", { replace: true });
+        };
 
       const roleRoutes = {
         admin: "/AdminHome",
