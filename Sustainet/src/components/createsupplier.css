@@ -7,13 +7,7 @@
     overflow: hidden;
   }
   
-  /* Sidebar Styling */
-  .sidebar {
-    width: 250px; /* Adjust as needed */
-    background-color: #343a40;
-    color: white;
-    padding: 20px;
-  }
+  
   
   /* Create Supplier Form Container */
   .create-supplier-container {
