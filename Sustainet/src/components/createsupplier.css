@@ -7,6 +7,9 @@
     overflow: hidden;
   }
   
+  
+  
+  /* Create Supplier Form Container */
   .create-supplier-container {
     flex: 1;
     display: flex;
