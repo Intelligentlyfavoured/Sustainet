@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+// import {FaBell} from "react-icons/fa";
 
 const Sidebar = () => {
   // Sidebar Menu Options
@@ -7,15 +8,15 @@ const Sidebar = () => {
     { title: "Initiate Voucher", path: "/create-voucher" },
     { title: "Create Supplier", path: "/create-supplier" },
     { title: "Review Voucher", path: "/reviewer" },
-    { title: "Authorize Voucher", path: "/authorize-voucher" },
-    { title: "Initiate Payment", path: "/initiate-payment" },
-    { title: "Payment Voucher", path: "/final-payment-voucher" },
+    { title: "Authorize Voucher", path: "/VoucherAuthorization" },
+    { title: "Initiate Payment", path: "/PaymentInitiation" },
+    { title: "Authorize Payment", path: "/PaymentAuthorization" },
     { title: "Documentation", path: "/documentation-voucher" },
   ];
 
   return (
     <div className="sidebar">
-      <h3 className="sidebar-title">Dashboard</h3>
+      <h3 className="sidebar-title" to="./Dashboard" >Dashboard</h3>
 
       <ul className="menu">
         {/* Main Navigation Links */}
@@ -28,7 +29,7 @@ const Sidebar = () => {
         ))}
 
         {/* Separator */}
-        <hr className="menu-separator" />
+        <br /><br /><br /><hr className="menu-separator" />
 
         {/* User Groups */}
         {/* <li>

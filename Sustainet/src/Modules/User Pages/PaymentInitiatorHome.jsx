@@ -27,7 +27,7 @@ function PaymentInitiatorHome() {
             {/* Conditional content for Initiator role */}
             {role === 'initiator' && (
               <div className="initiator-content">
-                <p>This is specific content for Payment Initiator.</p>
+                {/* <p>This is specific content for Payment Initiator.</p> */}
               </div>
             )}
             

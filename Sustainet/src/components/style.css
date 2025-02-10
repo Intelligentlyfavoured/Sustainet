@@ -1,0 +1,167 @@
+/* Top Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Filter Input */
+.filter-input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+  font-size: 14px;
+}
+
+/* Notification Icon */
+.notification-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.notif-count {
+  background: red;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+/* Reviewer Container */
+.reviewer-container {
+  display: flex;
+  height: 100vh;
+  margin-left: 230px;
+  background: #f4f4f4;
+}
+
+.reviewer-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Table Styles */
+.voucher-table {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #2f4f4f9c;
+  color: white;
+}
+
+tbody tr:hover {
+  background: #f1f1f1;
+}
+
+/* Status Colors */
+.status-approved {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+/* Action Buttons */
+.approve-btn, .reject-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.approve-btn {
+  background: green;
+  color: white;
+}
+
+.reject-btn {
+  background: red;
+  color: white;
+}
+
+.preview-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #2f4f4f9c;
+  color: white;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.document-preview {
+  width: 100%;
+  height: 300px;
+  border: none;
+  margin-top: 10px;
+}
+
+.close-btn {
+  background: gray;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}

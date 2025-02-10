@@ -24,7 +24,7 @@ function InitiatorHome() {
             
             {role === "initiator" && (
               <div className="initiator-content">
-                <p>This is specific content for Initiator.</p>
+                {/* <p>This is specific content for Initiator.</p> */}
               </div>
             )}
           </>
