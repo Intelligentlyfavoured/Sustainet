@@ -1,49 +1,85 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 import "../../App.css";
-import logo from "./logo.png"; // Replace with actual path
+import logo from "./logo.png"; 
 
-const users = {
-  "admin@example.com": { password: "admin123", role: "admin" },
-  "initiator@example.com": { password: "initiator123", role: "initiator" },
-  "authorizer@example.com": { password: "authorizer123", role: "authorizer" },
-  "reviewer@example.com": { password: "reviewer123", role: "reviewer" },
-  "payment_initiator@example.com": { password: "payment123", role: "payment_initiator" },
-  "final_payment_authorizer@example.com": { password: "final123", role: "final_payment_authorizer" },
-};
+const API_URL = "http://197.248.122.31/sustainet_voucher_api/public/api/login"; 
+const token = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0"
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem("admin");
+    if (storedUser) {
+      console.log('noma sana')
+      // window.location.replace( "/AdminHome")
+      // navigate("/AdminHome");
+     // ⬅️ Avoids re-triggering `useEffect`
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
+
+
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (users[email] && users[email].password === password) {
-      const role = users[email].role;
-      localStorage.setItem("user", JSON.stringify({ email, role }));
+    if (loading) return; // Prevent multiple requests
+    setError(null);
+    setLoading(true);
+  
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          email: email, 
+          password: password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.status_code === "1000") { 
+        // const { token, data: userData } = data;
 
-      const roleRoutes = {
-        admin: "/AdminHome",
-        initiator: "/InitiatorHome",
-        authorizer: "/AuthorizerHome",
-        reviewer: "/ReviewerHome",
-        payment_initiator: "/payment-initiator-home",
-        final_payment_authorizer: "/final-payment-authorizer-home",
-      };
+        const userData = data.data
 
-      navigate(roleRoutes[role] || "/");
-    } else {
-      setError("Invalid email or password");
+
+  
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("admin", JSON.stringify({ email: userData.email, role: userData.role }));
+        window.location.replace( "/AdminHome")
+     
+      
+      } else {
+        setError(data.message || "Invalid login credentials");
+      }
+    } catch (error) {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+  
 
   return (
     <div className="login-container">
       <img src={logo} alt="Logo" className="login-logo" />
-     
       {error && <p className="login-error">{error}</p>}
+
       <form onSubmit={handleLogin} className="login-form">
         <input
           type="email"
@@ -53,15 +89,24 @@ export default function LoginPage() {
           className="login-input"
           required
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="login-input"
-          required
-        />
-        <button type="submit" className="login-button">Login</button>
+
+        <div className="password-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="login-input"
+            required
+          />
+          <IconButton onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </div>
+
+        <button type="submit" className="login-button" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
     </div>
   );

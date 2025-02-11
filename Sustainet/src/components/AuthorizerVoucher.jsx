@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import "./AuthorizerVoucher.css"; // Import the CSS file
 import { FaBell } from 'react-icons/fa';
 
-function Reviewer() {
+function AuthorizeVoucher() {
   const [role, setRole] = useState(null);
   const [vouchers, setVouchers] = useState([]);
   const [notifications, setNotifications] = useState(0);
@@ -132,4 +132,4 @@ function Reviewer() {
   );
 }
 
-export default Reviewer;
+export default AuthorizeVoucher;

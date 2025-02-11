@@ -3,7 +3,7 @@ import "./UserGroupsTable.css"; // Import the CSS file
 import Sidebar from "./Sidebar";
 
 const API_URL = "http://197.248.122.31/sustainet_voucher_api/public/api/users";
-const AUTH_TOKEN = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0";
+const AUTH_TOKEN = localStorage.getItem("authToken");
 
 const UserGroupsTable = () => {
   const userRoles = [
@@ -17,6 +17,13 @@ const UserGroupsTable = () => {
 
   const headers = ["Name", "Telephone", "Email", "Role", "Action"];
   const [rows, setRows] = useState([]);
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    phone_number: "",
+    role: "",
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch users from API on mount
   useEffect(() => {
@@ -24,7 +31,8 @@ const UserGroupsTable = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${AUTH_TOKEN}`,
+        "Accept": "application/json",
+        "Authorization": `Bearer ${AUTH_TOKEN}`,
       },
     })
       .then((res) => res.json())
@@ -38,15 +46,44 @@ const UserGroupsTable = () => {
       .catch((error) => console.error("Error fetching users:", error));
   }, []);
 
+  // Open modal for adding a new user
+  const openModal = () => {
+    setNewUser({
+      name: "",
+      email: "",
+      phone_number: "",
+      role: "",
+    });
+    setIsModalOpen(true);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Handle input changes for new user form
+  const handleInputChange = (field, value) => {
+    setNewUser((prev) => ({ ...prev, [field]: value }));
+  };
+
   // Add new user to API
-  const addRow = async () => {
-    const newUser = {
-      name: "New User",
-      email: "newuser@example.com",
-      password: "password123",
-      password_confirmation: "password123",
-      role: "user",
-      phone_number: "1234567890",
+  const addNewUser = async () => {
+    const { name, email, phone_number, role } = newUser;
+
+    // Validation: Ensure all fields are filled
+    if (!name || !email || !phone_number || !role) {
+      alert("Please fill in all the fields.");
+      return;
+    }
+
+    const newUserData = {
+      name,
+      email,
+      phone_number,
+      role,
+      password: "password123", // Can be customized
+      password_confirmation: "password123", // Can be customized
     };
 
     try {
@@ -56,48 +93,16 @@ const UserGroupsTable = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${AUTH_TOKEN}`,
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newUserData),
       });
 
       if (!response.ok) throw new Error(`Error: ${response.status}`);
 
       const savedUser = await response.json();
       setRows([...rows, savedUser.data]); // Add new user with generated ID
+      closeModal(); // Close the modal after saving the user
     } catch (error) {
       console.error("Failed to add user:", error);
-    }
-  };
-
-  // Update user in API
-  const handleInputChange = async (index, field, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index][field] = value;
-    setRows(updatedRows);
-
-    const user = updatedRows[index];
-
-    try {
-      const response = await fetch(`${API_URL}/${user.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${AUTH_TOKEN}`,
-        },
-        body: JSON.stringify({
-          name: user.name,
-          email: user.email,
-          password: "newpassword",
-          password_confirmation: "newpassword",
-          role: user.role,
-        }),
-      });
-
-      const result = await response.json();
-      if (result.status_code !== "1000") {
-        throw new Error(`Update failed: ${result.message}`);
-      }
-    } catch (error) {
-      console.error("Failed to update user:", error);
     }
   };
 
@@ -110,7 +115,8 @@ const UserGroupsTable = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${AUTH_TOKEN}`,
+          "Accept": "application/json",
+          "Authorization": `Bearer ${AUTH_TOKEN}`,
         },
       });
 
@@ -130,6 +136,10 @@ const UserGroupsTable = () => {
       <Sidebar />
       <div className="table-container">
         <h2 className="table-title">User Group</h2>
+        <div  className="button-container">
+          <button onClick={openModal} className="add-button">Add User</button>
+        </div>
+
         <table className="user-table">
           <thead>
             <tr>
@@ -141,43 +151,10 @@ const UserGroupsTable = () => {
           <tbody>
             {rows.map((row, index) => (
               <tr key={index}>
-                <td>
-                  <input
-                    type="text"
-                    value={row.name}
-                    onChange={(e) => handleInputChange(index, "name", e.target.value)}
-                    placeholder="Enter Name"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    value={row.phone_number}
-                    onChange={(e) => handleInputChange(index, "phone_number", e.target.value)}
-                    placeholder="Enter Telephone"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="email"
-                    value={row.email}
-                    onChange={(e) => handleInputChange(index, "email", e.target.value)}
-                    placeholder="Enter Email"
-                  />
-                </td>
-                <td>
-                  <select
-                    value={row.role}
-                    onChange={(e) => handleInputChange(index, "role", e.target.value)}
-                  >
-                    <option value="">Select Role</option>
-                    {userRoles.map((role, i) => (
-                      <option key={i} value={role}>
-                        {role}
-                      </option>
-                    ))}
-                  </select>
-                </td>
+                <td>{row.name}</td>
+                <td>{row.phone_number}</td>
+                <td>{row.email}</td>
+                <td>{row.role}</td>
                 <td>
                   <button onClick={() => removeRow(index)} className="remove-button">
                     Remove
@@ -188,8 +165,49 @@ const UserGroupsTable = () => {
           </tbody>
         </table>
 
-        <button onClick={addRow} className="add-button">Add User</button>
+
       </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Add New User</h3>
+            <input
+              type="text"
+              placeholder="Enter Name"
+              value={newUser.name}
+              onChange={(e) => handleInputChange("name", e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Enter Telephone"
+              value={newUser.phone_number}
+              onChange={(e) => handleInputChange("phone_number", e.target.value)}
+            />
+            <input
+              type="email"
+              placeholder="Enter Email"
+              value={newUser.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+            />
+            <select
+              value={newUser.role}
+              onChange={(e) => handleInputChange("role", e.target.value)}
+            >
+              <option value="">Select Role</option>
+              {userRoles.map((role, index) => (
+                <option key={index} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
+            <div className="modal-buttons">
+              <button onClick={addNewUser} className="save-button">Save</button>
+              <button onClick={closeModal} className="cancel-button">Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

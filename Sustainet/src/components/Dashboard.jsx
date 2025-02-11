@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 export default function Dashboard() {
   const [data, setData] = useState({
@@ -9,25 +10,28 @@ export default function Dashboard() {
     finalAuthorization: 0,
   });
 
-  // Fetch the numbers from the server when the component mounts
+ 
   useEffect(() => {
-    // Simulating an API call to fetch the data from the server
+
     const fetchData = async () => {
       try {
-        // Replace this with your actual API endpoint
+       
         const response = await fetch('/api/dashboard-data');
         const result = await response.json();
-        setData(result); // Update state with the fetched data
+        setData(result); 
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data', error);
       }
     };
 
-    fetchData();
-  }, []); // Empty dependency array ensures this runs once on mount
+    // fetchData();
+  }, []); 
 
   return (
+<div>
+  <Sidebar/>
     <div className="dashboard-container">
+   
       <div className="tabs-container">
         <div className="tab">
           <Link to="/">
@@ -50,6 +54,7 @@ export default function Dashboard() {
           </Link>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -155,15 +155,17 @@ tbody tr:hover {
 }
 
 .close-btn {
-  background: gray;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
+  /* background: gray; */
+  color: #000;
+  /* padding: 8px 12px; */
+  border:0;
+  /* border-radius: 5px; */
   cursor: pointer;
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-top: 10px;
+  /* display: block; */
+  /* width: 10%; */
+  /* text-align: right; */
+  float: right;
+  /* margin-top: 10px; */
 }
 
 
@@ -176,7 +178,7 @@ tbody tr:hover {
 .form-container {
   flex: 1;
   margin: auto;
-  padding: 40px;
+  padding: 60px;
   max-width: 600px;
   background: white;
   border-radius: 10px;
@@ -226,6 +228,7 @@ tbody tr:hover {
 
 .add-account-btn {
   margin-top: 10px;
+  color: #006400;
 }
 
 .file-input {

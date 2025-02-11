@@ -4,154 +4,133 @@ import {
   Button,
   Paper,
   Typography,
-  IconButton
+  Grid,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import Sidebar from "./Sidebar"; 
-import "./style.css"; 
+import "./style.css";
+import Sidebar from "./Sidebar";
 
 export default function CreateSupplier() {
   const [form, setForm] = useState({
-    supplierName: "",
+    supplier_name: "",
     email: "",
-    phone: "",
-    company: "",
+    contact_number: "",
     address: "",
-    accounts: [""], // Multiple accounts
-    file: null
   });
 
-  const handleChange = (e, index = null) => {
+  const token = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0"
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "accounts" && index !== null) {
-      const updatedAccounts = [...form.accounts];
-      updatedAccounts[index] = value;
-      setForm((prev) => ({
-        ...prev,
-        accounts: updatedAccounts
-      }));
-    } else {
-      setForm((prev) => ({
-        ...prev,
-        [name]: value
-      }));
-    }
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    setForm((prev) => ({
-      ...prev,
-      file: e.target.files[0]
-    }));
-  };
-
-  const addAccountField = () => {
-    setForm((prev) => ({
-      ...prev,
-      accounts: [...prev.accounts, ""]
-    }));
-  };
-
-  const removeAccountField = (index) => {
-    const updatedAccounts = [...form.accounts];
-    updatedAccounts.splice(index, 1);
-    setForm((prev) => ({
-      ...prev,
-      accounts: updatedAccounts
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Supplier Data:", form);
+
+    const supplierData = {
+      supplier_name: form.supplier_name,
+      email: form.email,
+      contact_number: form.contact_number,
+      address: form.address,
+    };
+
+    try {
+      const response = await fetch(
+        "http://197.248.122.31/sustainet_voucher_api/public/api/suppliers",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`, 
+          },
+          body: JSON.stringify(supplierData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to add supplier");
+      }
+
+      alert("Supplier added successfully!");
+      console.log("Supplier Data:", data);
+
+      
+      setForm({
+        supplier_name: "",
+        email: "",
+        contact_number: "",
+        address: "",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error adding supplier: " + error.message);
+    }
   };
 
   return (
     <div className="container">
       <Sidebar />
       <Paper elevation={3} className="form-container">
-        <Typography variant="h5" className="form-title">Create Supplier</Typography>
+        <Typography variant="h5" className="form-title">
+          Supplier Information
+        </Typography>
+
         <form onSubmit={handleSubmit} className="supplier-form">
-          <TextField
-            label="Supplier Name"
-            name="supplierName"
-            value={form.supplierName}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Phone Number"
-            name="phone"
-            type="tel"
-            value={form.phone}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Company Name"
-            name="company"
-            value={form.company}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Address"
-            name="address"
-            value={form.address}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          {/* Dynamic Account Fields */}
-          <Typography variant="subtitle1" className="account-title">Accounts</Typography>
-          {form.accounts.map((account, index) => (
-            <div key={index} className="account-field">
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
               <TextField
-                label={`Account ${index + 1}`}
-                name="accounts"
-                value={account}
-                onChange={(e) => handleChange(e, index)}
+                label="Supplier Name"
+                name="supplier_name"
+                value={form.supplier_name}
+                onChange={handleChange}
                 fullWidth
                 margin="normal"
+                required
               />
-              <IconButton onClick={() => removeAccountField(index)} disabled={form.accounts.length === 1}>
-                <RemoveIcon />
-              </IconButton>
-            </div>
-          ))}
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={addAccountField}
-            className="add-account-btn"
-          >
-            Add Account
-          </Button>
+              <TextField
+                label="Email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+              <TextField
+                label="Contact Number"
+                name="contact_number"
+                value={form.contact_number}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+              <TextField
+                label="Address"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+            </Grid>
+          </Grid>
 
-          {/* File Upload */}
-          <input type="file" onChange={handleFileChange} className="file-input" />
-
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Save Supplier
-          </Button>
+          <Grid container justifyContent="center" mt={3}>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              fullWidth 
+              style={{ backgroundColor: "#32CD32" }}
+            >
+              Add Supplier
+            </Button>
+          </Grid>
         </form>
       </Paper>
     </div>
