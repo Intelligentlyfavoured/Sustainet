@@ -5,9 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import "../../App.css";
 import logo from "./logo.png"; 
 
-const API_URL = "http://197.248.122.31/sustainet_voucher_api/public/api/login"; 
-const token = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0"
 
+const API_URL = "http://197.248.122.31/sustainet_voucher_api/public/api/login"; 
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -17,23 +16,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
-    const storedUser = localStorage.getItem("admin");
-    if (storedUser) {
-      console.log('noma sana')
-      // window.location.replace( "/AdminHome")
-      // navigate("/AdminHome");
-     // ⬅️ Avoids re-triggering `useEffect`
+    if (localStorage.getItem("admin")) {
+      navigate("/AdminHome");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
-
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (loading) return; // Prevent multiple requests
+    if (loading) return;
     setError(null);
     setLoading(true);
   
@@ -44,26 +35,18 @@ export default function LoginPage() {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify({
-          email: email, 
-          password: password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
   
       const data = await response.json();
   
-      if (data.status_code === "1000") { 
-        // const { token, data: userData } = data;
-
-        const userData = data.data
-
-
-  
+      if (data.status_code === "1000") {
         localStorage.setItem("authToken", data.token);
-        localStorage.setItem("admin", JSON.stringify({ email: userData.email, role: userData.role }));
-        window.location.replace( "/AdminHome")
-     
-      
+        localStorage.setItem("admin", JSON.stringify({
+          email: data.data.email,
+          role: data.data.role
+        }));
+        navigate("/AdminHome");
       } else {
         setError(data.message || "Invalid login credentials");
       }
@@ -74,38 +57,37 @@ export default function LoginPage() {
     }
   };
   
-
   return (
-    <div className="login-container">
-      <img src={logo} alt="Logo" className="login-logo" />
+    <div className="login-card">
+      <div className="logo">
+      <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <h2>Welcome Back</h2>
       {error && <p className="login-error">{error}</p>}
-
-      <form onSubmit={handleLogin} className="login-form">
+      <form onSubmit={handleLogin}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="login-input"
+          className="input"
           required
         />
-
         <div className="password-container">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="login-input"
+            className="input"
             required
           />
           <IconButton onClick={() => setShowPassword(!showPassword)} className="toggle-password">
             {showPassword ? <VisibilityOff /> : <Visibility />}
           </IconButton>
         </div>
-
-        <button type="submit" className="login-button" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+        <button type="submit" className="button" disabled={loading}>
+          {loading ? "Logging in..." : "Sign in"}
         </button>
       </form>
     </div>

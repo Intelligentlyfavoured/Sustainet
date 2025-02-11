@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #1b6545, #084895, #a72631);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+  }
+  
+  .login-card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* .logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: #f3f4f6;
+    border-radius: 50%;
+    display: block;
+  } */
+  
+  .logo {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    /* background: #f3f4f6; */
+    border-radius: 50%;
+    display: block;
+    background-image: url('../logo.png'); /* Ensure the path is correct */
+    background-size: cover; /* Ensures the image fills the circle */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat;
+  }
+  
+  
+  h2 {
+    text-align: center;
+    margin: 0 0 1rem;
+    background: linear-gradient(to right, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  
+  .input {
+    width: 90%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  }
+  
+  .button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: linear-gradient(to right, #a62330, #8b5cf6);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .button:hover {
+    transform: translateY(-2px);
+  }
+  
+  .password-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .login-error {
+    color: red;
+    margin-bottom: 1rem;
+  }
