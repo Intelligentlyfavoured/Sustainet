@@ -1,0 +1,73 @@
+/* Container Styling */
+.table-container {
+    padding: 20px;
+    max-width: 90%;
+    margin-block:auto;
+    margin-left: 230px;
+  }
+  
+  /* Title Styling */
+  .table-title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Table Styling */
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+  }
+  
+  .user-table th, .user-table td {
+    border: 1px solid #e1dada;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .user-table th {
+    background-color:magnolia;
+    font-weight: bold;
+  }
+  
+  /* Input Field */
+  .user-table input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Add Button */
+  .add-button {
+    display: block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+  }
+  
+  .add-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Remove Button */
+  .remove-button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .remove-button:hover {
+    background-color: #c82333;
+  }
+  

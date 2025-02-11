@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Modules/Login/login";
 import PrivateRoute from "./PrivateRoute";
-import AdminHome from "./Modules/User Pages/AdminHome";
+import AdminHome from './Modules/User Pages/AdminHome';
 import InitiatorHome from "./Modules/User Pages/InitiatorHome";
 import AuthorizerHome from "./Modules/User Pages/AuthorizerHome";
 import ReviewerHome from "./Modules/User Pages/ReviewerHome";
@@ -14,6 +14,8 @@ import PaymentAuthorization from "./components/PaymentAuthorization";
 import PaymentInitiation from "./components/PaymentInitiation";
 import CreateVoucher from "./components/create-voucher";
 import CreateSupplier from "./components/create-supplier";
+import UserGroupsTable from "./components/userGroupsTable";
+import ListContainer from "./components/ListContainer";
 // import Documentation from "./components/Documentation";
 
 
@@ -29,6 +31,8 @@ function App() {
         <Route path="/PaymentAuthorization" element={<PaymentAuthorization />} />
         <Route path="/create-voucher" element={<CreateVoucher />} />
         <Route path="/create-supplier" element={<CreateSupplier />} />
+        <Route path="/userGroupsTable" element={<UserGroupsTable />} />
+        <Route path="/ListContainer" element={<ListContainer />} />
         {/* <Route path="/Documentation" element={<Documentation />} /> */}
       </Routes>
 
