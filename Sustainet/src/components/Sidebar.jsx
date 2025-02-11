@@ -1,29 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import logo from "../Modules/Login/logo2.png";
 
 const Sidebar = () => {
-  // Sidebar Menu Options
-  const menuItems = [
-    { title: "Initiate Voucher", path: "/create-voucher" },
-    { title: "Create Supplier", path: "/create-supplier" },
-    { title: "Review Voucher", path: "/reviewer" },
-    { title: "Authorize Voucher", path: "/VoucherAuthorization" },
-    { title: "Initiate Payment", path: "/PaymentInitiation" },
-    { title: "Authorize Payment", path: "/PaymentAuthorization" },
-    { title: "Documentation", path: "/Documentation" },
+  const [role, setRole] = useState("");
+  const storedRole = JSON.parse(localStorage.getItem("admin"));
+
+  useEffect(() => {
+    setRole(storedRole);
+    // alert(storedRole)
+  }, []);
+
+  // Define role-based menu items
+  const allMenuItems = [
+    { title: "Initiate Voucher", path: "/create-voucher", roles: ["admin", "initiator"] },
+    { title: "Create Supplier", path: "/create-supplier", roles: ["admin"] },
+    { title: "Review Voucher", path: "/reviewer", roles: ["admin", "reviewer"] },
+    { title: "Authorize Voucher", path: "/VoucherAuthorization", roles: ["admin", "authorizer"] },
+    { title: "Initiate Payment", path: "/PaymentInitiation", roles: ["admin", "initiator"] },
+    { title: "Authorize Payment", path: "/PaymentAuthorization", roles: ["admin", "authorizer"] },
+    { title: "Documentation", path: "/Documentation", roles: ["admin", "user"] },
   ];
 
-  // Logout function
+  
+  const menuItems = allMenuItems.filter(item => item.roles.includes( storedRole.role));
+
   const handleLogout = () => {
-    // Clear authentication data (if any)
     localStorage.removeItem("authToken");
-    // Redirect to login page
+    localStorage.removeItem("admin");
+    sessionStorage.clear();
     window.location.href = "/";
   };
 
   return (
     <div className="sidebar">
-      <h3 className="sidebar-title">Dashboard</h3>
+      <div className="logo-container">
+        <Link to="/AdminHome">
+          <img src={logo} alt="Company Logo" className="sidebar-logo" />
+        </Link>
+      </div>
 
       <ul className="menu">
         {menuItems.map((item, index) => (
@@ -35,10 +50,8 @@ const Sidebar = () => {
         ))}
       </ul>
 
-      {/* Separator */}
       <hr className="menu-separator" />
 
-      {/* Logout Button */}
       <div className="logout-container">
         <button onClick={handleLogout} className="logout-button">
           Logout

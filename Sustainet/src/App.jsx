@@ -14,36 +14,39 @@ import PaymentInitiation from "./components/PaymentInitiation";
 import CreateVoucher from "./components/create-voucher";
 import CreateSupplier from "./components/create-supplier";
 import Documentation from "./components/Documentation";
-
-
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
     <Router>
-
       <Routes>
-        <Route path="/reviewer" element={<Reviewer />} />
-        <Route path="/VoucherAuthorization" element={<VoucherAuthorization />} />
-        <Route path="/PaymentInitiation" element={<PaymentInitiation />} />
-        <Route path="/PaymentAuthorization" element={<PaymentAuthorization />} />
-        <Route path="/create-voucher" element={<CreateVoucher />} />
-        <Route path="/create-supplier" element={<CreateSupplier />} />
-        <Route path="/Documentation" element={<Documentation />} />
-      </Routes>
-
-      <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Login />} />
 
+       
+        <Route path="/Dashboard" element={<Dashboard />}/>
+          <Route path="Reviewer" element={<Reviewer />} />
+          <Route path="VoucherAuthorization" element={<VoucherAuthorization />} />
+          <Route path="PaymentInitiation" element={<PaymentInitiation />} />
+          <Route path="PaymentAuthorization" element={<PaymentAuthorization />} />
+          <Route path="create-voucher" element={<CreateVoucher />} />
+          <Route path="documentation" element={<Documentation />} />
+        
+        <Route path="create-supplier" element={<CreateSupplier />} />
+
+        
+
+       
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/AdminHome" element={<AdminHome />} />
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["initiator"]} />}>
-          <Route path="/InitiatorHome" element={<InitiatorHome />} />
+          <Route path="/initiator-home" element={<InitiatorHome />} />
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["authorizer"]} />}>
-          <Route path="/AuthorizerHome" element={<AuthorizerHome />} />
+          <Route path="/authorizer-home" element={<AuthorizerHome />} />
         </Route>
 
         <Route element={<PrivateRoute allowedRoles={["reviewer"]} />}>

@@ -7,7 +7,7 @@ function AdminHome() {
 
   useEffect(() => {
     // Fetch the user role from localStorage (or wherever you store it)
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('admin'));
     if (user) {
       setRole(user.role); // Set the role from localStorage
     }
