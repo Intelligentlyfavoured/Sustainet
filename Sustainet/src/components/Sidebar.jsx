@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../Modules/Login/logo2.png";
+import "./sidebar.css"; 
 
 const Sidebar = () => {
   const [role, setRole] = useState("");
@@ -15,13 +16,16 @@ const Sidebar = () => {
   const allMenuItems = [
     { title: "Initiate Voucher", path: "/create-voucher", roles: ["Admin", "Initiator"] },
     { title: "Create Supplier", path: "/create-supplier", roles: ["Admin"] },
-    { title: "Review Voucher", path: "/reviewer", roles: ["admin", "Reviewer"] },
+    { title: "Review Voucher", path: "/reviewer", roles: ["Admin", "Reviewer"] },
     { title: "Authorize Voucher", path: "/VoucherAuthorization", roles: ["Admin", "Authorizer"] },
     { title: "Initiate Payment", path: "/PaymentInitiation", roles: ["Admin", "Initiator"] },
     { title: "Authorize Payment", path: "/PaymentAuthorization", roles: ["Admin", "Authorizer"] },
     { title: "Documentation", path: "/Documentation", roles: ["Admin"] },
+    { title: "User Groups", path: "/userGroupsTable", roles: ["Admin"] },
+    { title: "Users", path: "/ListContainer", roles: ["Admin"] },
   ];
 
+ 
   
   const menuItems = allMenuItems.filter(item => item.roles.includes( storedRole.role));
 
