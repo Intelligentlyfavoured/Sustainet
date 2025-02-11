@@ -21,11 +21,13 @@ export default function LoginPage() {
   useEffect(() => {
     const storedUser = localStorage.getItem("admin");
     if (storedUser) {
-      navigate("/AdminHome");
+      console.log('noma sana')
+      // window.location.replace( "/AdminHome")
+      // navigate("/AdminHome");
      // ⬅️ Avoids re-triggering `useEffect`
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate]);
 
 
 
@@ -51,32 +53,17 @@ export default function LoginPage() {
       const data = await response.json();
   
       if (data.status_code === "1000") { 
-        const { token, data: userData } = data;
-  
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("admin", JSON.stringify({ email: userData.email, role: userData.role }));
-  
-     
-        
+        // const { token, data: userData } = data;
 
-        if (userData?.role === "admin") {
-          // navigate("/AdminHome");
-          window.location.replace( "/AdminHome")
-        
-        
-         
-          
-        } else {
-          const roleRoutes = {
-            initiator: "/InitiatorHome",
-            authorizer: "/AuthorizerHome",
-            reviewer: "/ReviewerHome",
-            payment_initiator: "/payment-initiator-home",
-            final_payment_authorizer: "/final-payment-authorizer-home",
-          };
+        const userData = data.data
+
+
   
-          navigate(roleRoutes[userData.role] || "/AdminHome");
-        }
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("admin", JSON.stringify({ email: userData.email, role: userData.role }));
+        window.location.replace( "/AdminHome")
+     
+      
       } else {
         setError(data.message || "Invalid login credentials");
       }

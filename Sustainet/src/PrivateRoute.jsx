@@ -7,9 +7,9 @@ const PrivateRoute = ({ allowedRoles }) => {
     return <Navigate to="/" />;
   }
 
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/" />;
-  }
+  // if (!allowedRoles.includes(user.role)) {
+  //   return <Navigate to="/" />;
+  // }
 
   return <Outlet />;
 };

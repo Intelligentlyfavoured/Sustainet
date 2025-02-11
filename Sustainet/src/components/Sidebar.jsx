@@ -13,13 +13,13 @@ const Sidebar = () => {
 
   // Define role-based menu items
   const allMenuItems = [
-    { title: "Initiate Voucher", path: "/create-voucher", roles: ["admin", "initiator"] },
+    { title: "Initiate Voucher", path: "/create-voucher", roles: ["admin", "Initiator"] },
     { title: "Create Supplier", path: "/create-supplier", roles: ["admin"] },
-    { title: "Review Voucher", path: "/reviewer", roles: ["admin", "reviewer"] },
-    { title: "Authorize Voucher", path: "/VoucherAuthorization", roles: ["admin", "authorizer"] },
-    { title: "Initiate Payment", path: "/PaymentInitiation", roles: ["admin", "initiator"] },
-    { title: "Authorize Payment", path: "/PaymentAuthorization", roles: ["admin", "authorizer"] },
-    { title: "Documentation", path: "/Documentation", roles: ["admin", "user"] },
+    { title: "Review Voucher", path: "/reviewer", roles: ["admin", "Reviewer"] },
+    { title: "Authorize Voucher", path: "/VoucherAuthorization", roles: ["admin", "Authorizer"] },
+    { title: "Initiate Payment", path: "/PaymentInitiation", roles: ["admin", "Initiator"] },
+    { title: "Authorize Payment", path: "/PaymentAuthorization", roles: ["admin", "Authorizer"] },
+    { title: "Documentation", path: "/Documentation", roles: ["admin"] },
   ];
 
   
