@@ -15,9 +15,10 @@ export default function CreateSupplier() {
     email: "",
     contact_number: "",
     address: "",
+    account_no: "",
   });
 
-  const token = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0"
+  const token = "118|Sgb3Y7Ijda5ZSpRlTY0yofCy5DsT4fqTryBtO5wKd890670a"
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +33,7 @@ export default function CreateSupplier() {
       email: form.email,
       contact_number: form.contact_number,
       address: form.address,
+      account_no: form.account_no,  // Send account_no to DB
     };
 
     try {
@@ -57,12 +59,12 @@ export default function CreateSupplier() {
       alert("Supplier added successfully!");
       console.log("Supplier Data:", data);
 
-      
       setForm({
         supplier_name: "",
         email: "",
         contact_number: "",
         address: "",
+        account_no: "",
       });
     } catch (error) {
       console.error("Error:", error);
@@ -113,6 +115,15 @@ export default function CreateSupplier() {
                 label="Address"
                 name="address"
                 value={form.address}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+              <TextField
+                label="Account Number"
+                name="account_no"
+                value={form.account_no}
                 onChange={handleChange}
                 fullWidth
                 margin="normal"

@@ -15,7 +15,7 @@ import "./style.css";
 const API_BASE_URL = "http://197.248.122.31/sustainet_voucher_api/public/api";
 
 export default function CreateVoucher() {
-  const token = localStorage.getItem("authToken"); 
+  const token = localStorage.getItem("authToken");
 
   const [form, setForm] = useState({
     invoice_id: "",
@@ -27,62 +27,55 @@ export default function CreateVoucher() {
   });
 
   const [suppliers, setSuppliers] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // alert(token)
-    const fetchSuppliers = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`${API_BASE_URL}/suppliers`, {
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Accept": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+ 
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch(`${API_BASE_URL}/suppliers`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+            },
+          });
+    
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    
+          const data = await response.json();
+    
+          if (Array.isArray(data.data)) {
+            setSuppliers(data.data); 
+            setAccounts(data.data.map((item) => ({
+              account_no: item.account_no,
+              account_name: item.account_name
+            }))); 
+          } else {
+            throw new Error("Unexpected API response format");
+          }
+        } catch (err) {
+          console.error("Error fetching suppliers and accounts:", err);
+          setSuppliers([]);
+          setAccounts([]);
+        } finally {
+          setLoading(false);
         }
-
-        const text = await response.text();
-        console.log("Raw API Response:", text);
-
-        const data = JSON.parse(text);
-        console.log("Parsed JSON:", data);
-
-        if (Array.isArray(data)) {
-          setSuppliers(data.data);
-        } else if (data.data && Array.isArray(data.data)) {
-          setSuppliers(data.data);
-        } else {
-          throw new Error("Unexpected API response format");
-        }
-      } catch (error) {
-        console.error("Error fetching suppliers:", error);
-        setSuppliers([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSuppliers();
-  }, [token]);
+      };
+    
+      fetchData();
+    }, [token]);
+    
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e) => {
-    setForm((prev) => ({
-      ...prev,
-      invoice_pdf: e.target.files[0],
-    }));
+    setForm((prev) => ({ ...prev, invoice_pdf: e.target.files[0] }));
   };
 
   const handleSubmit = async (e) => {
@@ -91,50 +84,28 @@ export default function CreateVoucher() {
     setError(null);
 
     const formData = new FormData();
-    formData.append("invoice_id", form.invoice_id);
-    formData.append("supplier_id", form.supplier_id);
-    formData.append("amount", form.amount);
-    formData.append("account_code", form.account_code);
-    formData.append("created_by", form.created_by);
-    if (form.invoice_pdf) {
-      formData.append("invoice_pdf", form.invoice_pdf);
-    }
+    Object.entries(form).forEach(([key, value]) => {
+      if (value) formData.append(key, value);
+    });
 
     try {
-      const response = await fetch(`${API_BASE_URL}/payment-vouchers`, {
+      alert('noma')
+      const response = await fetch(`http://197.248.122.31/sustainet_voucher_api/public/api/payment-vouchers`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
-      const text = await response.text();
-      console.log("Raw API Response:", text);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = JSON.parse(text);
-      console.log("Parsed JSON:", data);
-
+      const data = await response.json();
       if (data.status_code === "1000") {
         alert("Voucher created successfully!");
-        setForm({
-          invoice_id: "",
-          supplier_id: "",
-          amount: "",
-          account_code: "",
-          created_by: "1",
-          invoice_pdf: null,
-        });
+        setForm({ invoice_id: "", supplier_id: "", amount: "", account_code: "", created_by: "1", invoice_pdf: null });
       } else {
         throw new Error(data.message || "Failed to create voucher");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setError(error.message);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -144,76 +115,54 @@ export default function CreateVoucher() {
     <div className="container">
       <Sidebar />
       <Paper elevation={3} className="form-container">
-        <Typography variant="h5" className="form-title">
-          Create Payment Voucher
-        </Typography>
-
+        <Typography variant="h5" className="form-title">Create Payment Voucher</Typography>
         {error && <Typography color="error">{error}</Typography>}
 
         <form onSubmit={handleSubmit} className="voucher-form">
-          <TextField
-            label="Invoice ID"
-            name="invoice_id"
-            value={form.invoice_id}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
+          <TextField label="Invoice ID" name="invoice_id" value={form.invoice_id} onChange={handleChange} fullWidth margin="normal" required />
 
           <FormControl fullWidth margin="normal">
-            <InputLabel>Supplier</InputLabel>
-            <Select
-              name="supplier_id"
-              value={form.supplier_id}
-              onChange={handleChange}
-              required
-            >
-              {loading ? (
-                <MenuItem disabled>Loading suppliers...</MenuItem>
-              ) : suppliers.length > 0 ? (
-                suppliers.map((supplier) => (
-                  <MenuItem key={supplier.supplier_id} value={supplier.supplier_id}>
-                    {supplier.supplier_name}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>No suppliers available</MenuItem>
-              )}
-            </Select>
-          </FormControl>
+  <InputLabel>Supplier</InputLabel>
+  <Select name="supplier_id" value={form.supplier_id || ""} onChange={handleChange} required>
+    {loading ? (
+      <MenuItem disabled>Loading suppliers...</MenuItem>
+    ) : suppliers.length > 0 ? (
+      suppliers.map((supplier) => (
+        <MenuItem key={supplier.supplier_id} value={supplier.supplier_id}>
+          {supplier.supplier_name}
+        </MenuItem>
+      ))
+    ) : (
+      <MenuItem disabled>No suppliers available</MenuItem>
+    )}
+  </Select>
+</FormControl>
 
-          <TextField
-            label="Amount"
-            name="amount"
-            type="number"
-            value={form.amount}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
+<FormControl fullWidth margin="normal">
+  <InputLabel>Account Number</InputLabel>
+  <Select name="account_code" value={form.account_code || ""} onChange={handleChange} required>
+    {loading ? (
+      <MenuItem disabled>Loading accounts...</MenuItem>
+    ) : accounts.length > 0 ? (
+      accounts.map((account) => (
+        <MenuItem key={account.account_no} value={account.account_no}>
+          {account.account_no} - {account.account_name}
+        </MenuItem>
+      ))
+    ) : (
+      <MenuItem disabled>No accounts available</MenuItem>
+    )}
+  </Select>
+</FormControl>
 
-          <TextField
-            label="Account Code"
-            name="account_code"
-            value={form.account_code}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            required
-          />
+
+
+          <TextField label="Amount" name="amount" type="number" value={form.amount} onChange={handleChange} fullWidth margin="normal" required />
 
           <label className="file-label">Upload Invoice</label>
           <input type="file" onChange={handleFileChange} className="file-input" />
 
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            style={{ backgroundColor: "#32CD32", marginTop: "10px" }}
-            disabled={loading}
-          >
+          <Button type="submit" variant="contained" fullWidth style={{ backgroundColor: "#32CD32", marginTop: "10px" }} disabled={loading}>
             {loading ? "Saving..." : "Save Voucher"}
           </Button>
         </form>
