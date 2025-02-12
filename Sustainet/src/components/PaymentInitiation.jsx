@@ -3,86 +3,100 @@ import "./style.css";
 import Sidebar from "./Sidebar";
 import { FaBell } from "react-icons/fa";
 
-const API_URL = "https://your-api-endpoint.com/vouchers";
+// Set the API endpoint for fetching authorized payment vouchers
+const API_URL = "http://197.248.122.31/sustainet_voucher_api/public/api/payment-vouchers/authorized";
+
+// Base URL for accessing invoice PDF documents
+const INVOICE_BASE_URL = "http://197.248.122.31/sustainet_voucher_api/public/invoices/";
+
+// (Optional) If your API requires a token, uncomment and set it here:
+// const token = "3|59kxMti9Edfh56Adps9Xp2uwHr7WWnKzDmnBikuy2021ffb0";
 
 const PaymentInitiation = () => {
   const [vouchers, setVouchers] = useState([]);
   const [filterText, setFilterText] = useState("");
   const [selectedVoucher, setSelectedVoucher] = useState(null);
   const [comment, setComment] = useState("");
-  const [status, setStatus] = useState("Pending"); // Default status
+  const [status, setStatus] = useState("Pending"); // Default status for review
   const [notifications, setNotifications] = useState(0);
 
   useEffect(() => {
-    fetchPendingVouchers();
+    fetchVouchers();
   }, []);
 
-  const fetchPendingVouchers = async () => {
+  // GET: Fetch vouchers from the API
+  const fetchVouchers = async () => {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL, {
+        headers: {
+          "Content-Type": "application/json",
+          // If using a token, include:
+          // "Authorization": `Bearer ${token}`
+        },
+      });
       const data = await response.json();
-      setVouchers(data);
+      // The API returns data in the "data" property
+      setVouchers(data.data);
     } catch (error) {
       console.error("Error fetching vouchers:", error);
-
-      // // Dummy data for testing
-      // setVouchers([
-      //   {
-      //     id: "VCH-001",
-      //     supplier: "ABC Supplies Ltd",
-      //     amount: "150,000",
-      //     invoice: "INV-202501",
-      //     email: "contact@abc.com",
-      //     phone: "+254712345678",
-      //     product: "Office Chairs",
-      //     status: "Pending",
-      //   },
-      //   {
-      //     id: "VCH-002",
-      //     supplier: "XYZ Traders",
-      //     amount: "75,000",
-      //     invoice: "INV-202502",
-      //     email: "support@xyz.com",
-      //     phone: "+254798765432",
-      //     product: "Laptops",
-      //     status: "Pending",
-      //   },
-      //   {
-      //     id: "VCH-003",
-      //     supplier: "MNO Enterprises",
-      //     amount: "200,000",
-      //     invoice: "INV-202503",
-      //     email: "sales@mno.com",
-      //     phone: "+254701234567",
-      //     product: "Printers",
-      //     status: "Pending",
-      //   },
-      // ]);
+      // Optionally, set dummy data if needed:
+      // setVouchers([...]);
     }
   };
 
+  // Open modal to review/update voucher status
   const openModal = (voucher) => {
     setSelectedVoucher(voucher);
-    setComment(voucher.comment || "");
+    setComment(voucher.comments || "");
     setStatus(voucher.status || "Pending");
   };
 
+  // Close modal and reset modal fields
   const closeModal = () => {
     setSelectedVoucher(null);
     setComment("");
     setStatus("Pending");
   };
 
-  const handleReviewSubmit = () => {
-    // Update the status in the vouchers list
-    const updatedVouchers = vouchers.map((v) =>
-      v.id === selectedVoucher.id ? { ...v, status } : v
-    );
+  // POST: Submit the review update
+  const handleReviewSubmit = async () => {
+    if (!selectedVoucher) return;
 
-    setVouchers(updatedVouchers);
-    closeModal();
+    // Build the payload. Note that here we use the voucher's "id" (the unique identifier)
+    const payload = {
+      id: selectedVoucher.id,                     // Unique voucher identifier from API
+      invoice_id: selectedVoucher.invoice_id || 1,  // Default if missing; update as needed
+      supplier_id: selectedVoucher.supplier_id || 3, // Default if missing; update as needed
+      amount: parseFloat(selectedVoucher.amount) || 0,
+      reviewer_id: selectedVoucher.reviewer_id || 1, // Default (update as needed)
+      comments: comment,                           // Include comments if provided (or an empty string)
+      status: status,
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // If using a token, include:
+          // "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      if (result.status_code === "1000") {
+        alert("Review submitted successfully!");
+        await fetchVouchers();
+        closeModal();
+      } else {
+        alert("Failed to submit review: " + result.message);
+      }
+    } catch (error) {
+      console.error("Error updating voucher review:", error);
+    }
   };
 
+  // Filter vouchers based on any field's text (case-insensitive)
   const filteredVouchers = vouchers.filter((voucher) =>
     Object.values(voucher).some((value) =>
       value?.toString().toLowerCase().includes(filterText.toLowerCase())
@@ -112,13 +126,9 @@ const PaymentInitiation = () => {
           <table>
             <thead>
               <tr>
-                <th>Voucher</th>
-                <th>Supplier</th>
+                <th>ID</th>
                 <th>Amount</th>
-                <th>Invoice</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Product</th>
+                <th>Account No</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -126,34 +136,28 @@ const PaymentInitiation = () => {
             <tbody>
               {filteredVouchers.length === 0 ? (
                 <tr>
-                  <td colSpan="9">No matching vouchers</td>
+                  <td colSpan="6">No matching vouchers</td>
                 </tr>
               ) : (
-                filteredVouchers.map((voucher) => (
-                  <tr key={voucher.id}>
+                filteredVouchers.map((voucher, index) => (
+                  <tr key={voucher.id ? voucher.id : index}>
                     <td>{voucher.id}</td>
-                    <td>{voucher.supplier}</td>
-                    <td>Ksh {voucher.amount}</td>
-                    <td>{voucher.invoice}</td>
-                    <td>{voucher.email}</td>
-                    <td>{voucher.phone}</td>
-                    <td>{voucher.product}</td>
+                    
+                    <td>{voucher.amount ? `Ksh ${voucher.amount}` : "N/A"}</td>
+                    <td>{voucher.account_no || "N/A"}</td>
                     <td>
                       <span
                         className={`status-badge ${
-                          voucher.status === "Pending"
-                            ? "pending"
-                            : voucher.status === "Initiated"
-                            ? "Initiated"
-                            : "rejected"
+                          voucher.status === "Authorized" ? "authorized" :
+                          voucher.status === "Pending" ? "pending" : "rejected"
                         }`}
                       >
-                        {voucher.status}
+                        {voucher.status || "N/A"}
                       </span>
                     </td>
                     <td>
                       <button className="preview-btn" onClick={() => openModal(voucher)}>
-                      Initiate Payment
+                        Initiate Payment
                       </button>
                     </td>
                   </tr>
@@ -163,50 +167,53 @@ const PaymentInitiation = () => {
           </table>
         </div>
 
-        {/* Modal Popup */}
+        {/* Modal Popup for Reviewing a Voucher */}
         {selectedVoucher && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <button className="close-btn" onClick={closeModal}>
-                X
-              </button>
+              <button className="close-btn" onClick={closeModal}>X</button>
               <h3>Payment Initiation</h3>
-              <p><strong>Supplier:</strong> {selectedVoucher.supplier}</p>
-              <p><strong>Amount:</strong> Ksh {selectedVoucher.amount}</p>
-              <p><strong>Invoice:</strong> {selectedVoucher.invoice}</p>
-              <p><strong>Email:</strong> {selectedVoucher.email}</p>
-              <p><strong>Phone:</strong> {selectedVoucher.phone}</p>
-              <p><strong>Product:</strong> {selectedVoucher.product}</p>
-
-              {/* Status Dropdown */}
+              <p>
+                <strong>Invoice:</strong> {selectedVoucher.pdf_path}
+              </p>
+              <p>
+                <strong>Invoice ID:</strong> {selectedVoucher.invoice_id || "N/A"}
+              </p>
+              <p>
+                <strong>Amount:</strong> {selectedVoucher.amount ? `Ksh ${selectedVoucher.amount}` : "N/A"}
+              </p>
+              <p>
+                <strong>Account No:</strong> {selectedVoucher.account_no || "N/A"}
+              </p>
+              <p>
+                <strong>Status:</strong> {selectedVoucher.status || "N/A"}
+              </p>
               <label style={{ marginBottom: "10px", display: "block" }}>
                 <strong>Status:</strong>
-                    </label>
-                    <select
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value)}
-                      style={{ marginBottom: "15px", display: "block", width: "50%" }}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Initiated">Initiated</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
-
-                    {/* Comments */}
-                    <textarea
-                      placeholder="Add comments..."
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      style={{ marginBottom: "15px", display: "block", width: "100%" }}
-                    />
-
-                    <button
-                      className="submit-btn"
-                      onClick={handleReviewSubmit}
-                      style={{ marginTop: "10px", width: "50%" }}
-                    >
-                      Submit
-                    </button>
+              </label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                style={{ marginBottom: "15px", display: "block", width: "50%" }}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Authorized">Authorized</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              {/* Comments field is optional */}
+              <textarea
+                placeholder="Add comments (optional)..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                style={{ marginBottom: "15px", display: "block", width: "100%" }}
+              />
+              <button
+                className="submit-btn"
+                onClick={handleReviewSubmit}
+                style={{ marginTop: "10px", width: "50%" }}
+              >
+                Submit
+              </button>
             </div>
           </div>
         )}

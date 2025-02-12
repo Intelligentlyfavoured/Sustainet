@@ -90,6 +90,7 @@ const VoucherAuthorization = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
           // Uncomment the following if you need to send a token:
           // "Authorization": `Bearer ${token}`
         },
@@ -140,11 +141,11 @@ const VoucherAuthorization = () => {
             <thead>
               <tr>
                 <th>Account  Number</th>
-                <th>Supplier Name</th>
+                <th>Supplier ID</th>
                 <th>Amount</th>
                 <th>Created By</th>
-                {/* <th>Email</th>
-                <th>Phone</th> */}
+                <th>Created At</th>
+                <th>Updated At</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -158,9 +159,11 @@ const VoucherAuthorization = () => {
                 filteredVouchers.map((voucher, index) => (
                   <tr key={voucher.id ? voucher.id : index}>
                     <td>{voucher.account_no}</td>
-                    <td>{voucher.supplier_name}</td>
+                    <td>{voucher.supplier_id}</td>
                     <td>{voucher.amount ? `Ksh ${voucher.amount}` : "N/A"}</td>
                     <td>{voucher.created_by || "N/A"}</td>
+                    <td>{voucher.updated_at || "N/A"}</td>
+                    <td>{voucher.updated_at || "N/A"}</td>
                     {/* <td>{voucher.email || "N/A"}</td>
                     <td>{voucher.phone || "N/A"}</td> */}
                     <td>
@@ -195,10 +198,10 @@ const VoucherAuthorization = () => {
               <button className="close-btn" onClick={closeModal}>X</button>
               <h3>Voucher Authorization</h3>
               <p>
-                <strong>Voucher Name:</strong> {selectedVoucher.voucher_name || "N/A"}
+                <strong>Acc Number:</strong> {selectedVoucher.account_no || "N/A"}
               </p>
               <p>
-                <strong>Supplier Name:</strong> {selectedVoucher.supplier_name || "N/A"}
+                <strong>Supplier ID:</strong> {selectedVoucher.supplier_id || "N/A"}
               </p>
               <p>
                 <strong>Created By:</strong> {selectedVoucher.created_by || "N/A"}
@@ -207,18 +210,7 @@ const VoucherAuthorization = () => {
                 <strong>Amount:</strong> {selectedVoucher.amount ? `Ksh ${selectedVoucher.amount}` : "N/A"}
               </p>
               <p>
-                <strong>Invoice:</strong>{" "}
-                {selectedVoucher.invoice ? (
-                  <a
-                    href={`${INVOICE_BASE_URL}${selectedVoucher.pdf_path}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {selectedVoucher.invoice}
-                  </a>
-                ) : (
-                  "N/A"
-                )}
+                <strong>Invoice:</strong> {selectedVoucher.pdf_path}
               </p>
               <label style={{ marginBottom: "10px", display: "block" }}>
                 <strong>Status:</strong>
